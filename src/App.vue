@@ -16,7 +16,7 @@ ElNotification({
   type: "success",
   message: h(
     "a",
-    { style: "color: teal", target: "_blank", href: "https://github.com/un-pany/v3-admin-vite" },
+    { style: "color: teal", target: "_blank", href: "https://neal.place" },
     "欢迎来到奇幻士多店~"
   ),
   duration: 0,

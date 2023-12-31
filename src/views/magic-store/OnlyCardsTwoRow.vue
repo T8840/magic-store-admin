@@ -9,7 +9,7 @@
         <div
           class="card"
           :class="{ 'flipped': card.flipped }"
-          v-for="(card, index) in rowCards"
+          v-for="(card, index) in topRowCards"
           :key="`top-${index}`"
           @click="flipCard(card)"
         >
@@ -22,7 +22,24 @@
           </div>
         </div>
       </div>
-     
+
+      <div class="card-row">
+        <div
+          class="card"
+          :class="{ 'flipped': card.flipped }"
+          v-for="(card, index) in bottomRowCards"
+          :key="`bottom-${index}`"
+          @click="flipCard(card)"
+        >
+          <div class="card-face">
+            <el-image :src="card.frontImage" fit="cover" />
+          </div>
+          <div class="card-back">
+            <el-image :src="card.backImage" fit="cover" />
+            <el-button v-if="card.flipped" class="copy-button"  icon="el-icon-share" @click.stop="copyCard(card)"></el-button>
+          </div>
+        </div>
+      </div>
     </el-main>
 
     <el-footer class="footer-content">
@@ -65,6 +82,12 @@ export default {
   computed: {
     rowCards() {
       return this.cards
+    },
+    topRowCards() {
+      return this.cards.slice(0, 4);
+    },
+    bottomRowCards() {
+      return this.cards.slice(4, 8);
     },
     
   },

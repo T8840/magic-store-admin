@@ -3,6 +3,8 @@ import { history, flatMultiLevelRoutes } from "./helper"
 import routeSettings from "@/config/route"
 import LandingPage from '@/views/magic-store/LandingPage.vue'
 import OnlyCards from '@/views/magic-store/OnlyCards.vue'
+import OnlyCardsTwoRow from '@/views/magic-store/OnlyCards.vue'
+
 
 const Layouts = () => import("@/layouts/index.vue")
 
@@ -22,6 +24,14 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/cards',
     name: 'Cards',
+    component: OnlyCardsTwoRow,
+    meta: {
+      hidden: true  
+    }
+  },
+  {
+    path: '/card',
+    name: 'Card',
     component: OnlyCards,
     meta: {
       hidden: true  
