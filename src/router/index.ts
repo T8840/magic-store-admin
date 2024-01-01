@@ -3,7 +3,7 @@ import { history, flatMultiLevelRoutes } from "./helper"
 import routeSettings from "@/config/route"
 import LandingPage from '@/views/magic-store/LandingPage.vue'
 import OnlyCards from '@/views/magic-store/OnlyCards.vue'
-import OnlyCardsTwoRow from '@/views/magic-store/OnlyCards.vue'
+import OnlyCardsTwoRow from '@/views/magic-store/OnlyCardsTwoRow.vue'
 
 
 const Layouts = () => import("@/layouts/index.vue")
@@ -330,7 +330,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: "/user",
     component: Layouts,
     redirect: "/user/index",
-    roles: ["admin"],
     name: "用户管理",
     meta: {
       title: "用户管理",

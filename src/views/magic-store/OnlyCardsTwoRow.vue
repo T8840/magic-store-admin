@@ -1,10 +1,14 @@
 <template>
-  <el-container class="app-container">
+  <el-container class="app-container-row">
+     <!-- 图片A（右上角） -->
+     <img src="@/assets/layouts/magic-logo.png" alt="Image A" class="image-top-right">
+
+
     <el-header>
-      <h1>心灵时光机</h1>
+      <!-- <h1>心灵时光机</h1> -->
     </el-header>
 
-     <el-main class="cards-container">
+     <el-main class="cards-container-row">
       <div class="card-row">
         <div
           class="card"
@@ -40,11 +44,21 @@
           </div>
         </div>
       </div>
+
+    <div class="card special-card" @click="drawRandomCard">
+      <div class="card-face">
+        <el-image :src="currentCardImage" fit="cover" />
+      </div>
+    </div>
     </el-main>
 
     <el-footer class="footer-content">
       <p>&copy; 2023 - <span>Neal </span> - Design</p>
     </el-footer>
+
+    <!-- 图片B（左下角） -->
+    <img src="@/assets/layouts/ip.png" alt="Image B" class="image-bottom-left">
+
   </el-container>
 </template>
 
@@ -59,13 +73,14 @@ import { viewGoodBackURL, viewGoodFrontURL} from './components/viewGoodURL';
 import { fightBackURL , fightFrontURL} from './components/fightURL'; 
 import { ideaBackURL , ideaFrontURL} from './components/ideaURL'; 
 
+
 export default {
   data() {
     return {
+      currentCardImage: 'https://bu.dusays.com/2023/12/31/659129829efe9.png', // enengy初始卡牌图片
       inputText: '', // 用户信纸顶部输入的文本
       footerInputText: '', // 用于信纸底部输入框的数据
       cards: [
-        {type: 'gift',frontImage: giftBackURL, backImage: '' , flipped: false},
         {type: 'gift',frontImage: giftBackURL, backImage: '' , flipped: false},
         {type: 'idea',frontImage: ideaBackURL, backImage: '' , flipped: false},
         {type: 'viewBad',frontImage: viewBadBackURL, backImage: '' , flipped: false},
@@ -75,8 +90,8 @@ export default {
         {type: 'feelBad',frontImage: feelBadBackURL, backImage: '' , flipped: false},
         {type: 'feelGood',frontImage: feelGoodBackURL, backImage: '' , flipped: false},
         {type: 'energy',frontImage: energyBackURL, backImage: '' , flipped: false},
-
-      ]
+      ],
+     
     };
   },
   computed: {
@@ -135,6 +150,11 @@ export default {
       }
     },
 
+    drawRandomCard() {
+      const randomIndex = Math.floor(Math.random() * energyFrontURL.length);
+      const randomImageUrl = energyFrontURL[randomIndex];
+      this.currentCardImage = randomImageUrl; // 更新卡牌图片
+    },
     copyCard(card) {
       if (navigator.clipboard) {
         // 使用剪贴板 API 复制图片链接
@@ -157,12 +177,28 @@ export default {
 </script>
 
 <style scoped>
-.app-container {
+.app-container-row {
   /* Other styles... */
-  background: url('/images/star.gif') no-repeat center center fixed;
+  background: url('@/assets/layouts/star.gif') no-repeat center center fixed; 
   background-size: cover; /* 覆盖整个容器 */
   width: 100%; /* 容器宽度占满整个视口 */
   min-height: 100vh; /* 至少占据整个视口的高度 */
+}
+
+.image-top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;  /* 根据需要调整尺寸 */
+  height: auto;
+}
+
+.image-bottom-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;  /* 根据需要调整尺寸 */
+  height: auto;
 }
 
 .el-header,
@@ -174,25 +210,26 @@ export default {
   color: #800080; /* 深紫色 */
 }
 
-.cards-container {
-  z-index: 2; /* 确保卡片在信纸之上 */
+.cards-container-row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column; /* 垂直排列 */
   justify-content: center;
-  padding-bottom: 20px; /* 调整padding以确保卡片和信纸底部对齐 */
-  position: relative;
+  align-items: center;
+  padding-bottom: 20px;
 }
 
 .card-row {
   display: flex;
-  justify-content: center;
-  margin: 10px 0; /* This creates a 20px gap between rows */
+  flex-direction: row; /* 水平排列卡牌 */
+  justify-content: center; /* 居中对齐 */
+  align-items: center;
+  margin-bottom: 20px; /* 排与排之间的间距 */
 }
 
 .card {
   width: 200px;
   height: 300px;
+  margin-bottom: 20px; /* 卡牌之间的垂直间距 */
   margin: 0 10px; /* This creates a 20px gap between cards */
   perspective: 1000px;
   cursor: pointer;
@@ -222,6 +259,14 @@ export default {
   transform: rotateY(0deg);
 }
 
+.special-card {
+  position: absolute;
+  right: 10px; /* 距离右边缘的距离 */
+  bottom: 10px; /* 距离底部的距离 */
+  width: 200px; /* 卡牌宽度 */
+  height: 250px; /* 卡牌高度 */
+  /* 根据需要添加其他样式，例如边框、背景等 */
+}
 .footer-content {
   text-align: center;
   width: 100%; /* 确保footer占满整个宽度 */

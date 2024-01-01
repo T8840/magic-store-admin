@@ -200,7 +200,7 @@ export default {
 <style scoped>
 .app-container {
   /* Other styles... */
-  background: url('/images/星空漫游gif.GIF') no-repeat center center fixed;
+  background: url('/images/star.gif') no-repeat center center fixed;
   background-size: cover;
 }
 
