@@ -45,11 +45,31 @@
         </div>
       </div>
 
-    <div class="card special-card" @click="drawRandomCard">
+    <!-- <div class="card special-card" @click="drawRandomCard">
       <div class="card-face">
         <el-image :src="currentCardImage" fit="cover" />
       </div>
+    </div> -->
+
+    <!-- 能量扭蛋卡片 -->
+    <div class="card special-card" @click="drawRandomCard">
+      <div class="card-inner" :class="{ 'is-flipped': specialCardFlipped }">
+        <div class="card-face">
+          <!-- 正面图像 -->
+          <el-image src="https://bu.dusays.com/2023/12/31/659129829efe9.png" fit="cover" />
+        </div>
+        <div class="card-back">
+          <!-- 背面图像（随机生成） -->
+          <el-image :src="currentSpecialCardImage" fit="cover" />
+        </div>
+      </div>
     </div>
+
+     <!-- 卡片点击弹窗 -->
+     <el-dialog v-model="dialogVisible" width="30%" center>
+        <img :src="selectedCardImage" class="enlarged-image">
+        <el-button class="close-dialog" icon="el-icon-close" @click="closeDialog"></el-button>
+      </el-dialog>
     </el-main>
 
     <el-footer class="footer-content">
@@ -91,7 +111,10 @@ export default {
         {type: 'feelGood',frontImage: feelGoodBackURL, backImage: '' , flipped: false},
         {type: 'energy',frontImage: energyBackURL, backImage: '' , flipped: false},
       ],
-     
+      dialogVisible: false,
+      selectedCardImage: '',
+      specialCardFlipped: false, // 特殊卡片翻转状态
+      currentSpecialCardImage: '', // 特殊卡片背面图像
     };
   },
   computed: {
@@ -142,18 +165,33 @@ export default {
       // 从相应数组中随机选择一张图片
       const randomFrontImage = frontImages[Math.floor(Math.random() * frontImages.length)];
       card.backImage = randomFrontImage;
-
+      if (!card.flipped) {
+        this.selectedCardImage = randomFrontImage; // 更新弹窗中的图片
+        this.dialogVisible = true; // 显示弹窗
+      }
       // 翻转卡片逻辑
       const index = this.cards.findIndex(c => c === card);
       if (index !== -1) {
         this.cards.splice(index, 1, { ...this.cards[index], flipped: !this.cards[index].flipped });
       }
     },
-
+    closeDialog() {
+      this.dialogVisible = false;
+    },
     drawRandomCard() {
+      // const randomIndex = Math.floor(Math.random() * energyFrontURL.length);
+      // const randomImageUrl = energyFrontURL[randomIndex];
+      // this.currentCardImage = randomImageUrl; // 更新卡牌图片
+
+      // 生成随机图像
       const randomIndex = Math.floor(Math.random() * energyFrontURL.length);
       const randomImageUrl = energyFrontURL[randomIndex];
-      this.currentCardImage = randomImageUrl; // 更新卡牌图片
+      this.currentSpecialCardImage = randomImageUrl;
+
+      // 翻转卡片并显示弹窗
+      this.specialCardFlipped = true;
+      this.selectedCardImage = randomImageUrl;
+      this.dialogVisible = true;
     },
     copyCard(card) {
       if (navigator.clipboard) {
@@ -189,7 +227,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  width: 200px;  /* 根据需要调整尺寸 */
+  width: 150px;  /* 根据需要调整尺寸 */
   height: auto;
 }
 
@@ -197,7 +235,7 @@ export default {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 200px;  /* 根据需要调整尺寸 */
+  width: 150px;  /* 根据需要调整尺寸 */
   height: auto;
 }
 
@@ -261,12 +299,23 @@ export default {
 
 .special-card {
   position: absolute;
-  right: 10px; /* 距离右边缘的距离 */
+  right: 0px; /* 距离右边缘的距离 */
   bottom: 10px; /* 距离底部的距离 */
-  width: 200px; /* 卡牌宽度 */
-  height: 250px; /* 卡牌高度 */
+  width: 150px; /* 卡牌宽度 */
+  height: 200px; /* 卡牌高度 */
   /* 根据需要添加其他样式，例如边框、背景等 */
 }
+
+.special-card .card-inner {
+  /* 与 .card 类似的翻转样式 */
+
+}
+
+.special-card .card-face,
+.special-card .card-back {
+  /* 与 .card 类似的正反面样式 */
+}
+
 .footer-content {
   text-align: center;
   width: 100%; /* 确保footer占满整个宽度 */
@@ -292,5 +341,31 @@ export default {
   /* 底部输入框特有的样式 */
   background-color: #7b4b94; /* 紫色背景 */
   color: white; /* 文字颜色为白色 */
+}
+
+
+
+
+.enlarged-image {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.close-dialog {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+}
+
+/* 添加弹窗样式 */
+.el-dialog__body {
+  padding: 10px;
+}
+
+.el-dialog {
+  overflow: hidden; /* 隐藏多余的部分 */
 }
 </style>

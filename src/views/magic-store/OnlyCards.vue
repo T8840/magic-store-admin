@@ -4,29 +4,29 @@
       <h1>心灵时光机</h1>
     </el-header>
 
-     <el-main class="cards-container">
+    <el-main class="cards-container">
       <div class="card-row">
         <div
           class="card"
-          :class="{ 'flipped': card.flipped }"
           v-for="(card, index) in rowCards"
-          :key="`top-${index}`"
+          :key="`card-${index}`"
           @click="flipCard(card)"
         >
-          <div class="card-face">
-            <el-image :src="card.frontImage" fit="cover" />
-          </div>
-          <div class="card-back">
-            <el-image :src="card.backImage" fit="cover" />
-            <el-button v-if="card.flipped" class="copy-button"  icon="el-icon-share" @click.stop="copyCard(card)"></el-button>
+          <div class="card-inner" :class="{ 'is-flipped': card.flipped }">
+            <div class="card-face card-front">
+              <el-image :src="card.frontImage" fit="cover" />
+            </div>
+            <div class="card-face card-back">
+              <el-image :src="card.backImage" fit="cover" />
+              <el-button v-if="card.flipped" class="copy-button" icon="el-icon-share" @click.stop="copyCard(card)"></el-button>
+            </div>
           </div>
         </div>
       </div>
-     
     </el-main>
 
     <el-footer class="footer-content">
-      <p>&copy; 2023 - <span>Neal </span> - Design</p>
+      <p>&copy; 2023 - <span>Neal</span> - Design</p>
     </el-footer>
   </el-container>
 </template>
@@ -64,9 +64,8 @@ export default {
   },
   computed: {
     rowCards() {
-      return this.cards
-    },
-    
+      return this.cards;
+    }
   },
   methods: {
     flipCard(card) {
@@ -101,17 +100,12 @@ export default {
           break;
       }
 
-      // 从相应数组中随机选择一张图片
       const randomFrontImage = frontImages[Math.floor(Math.random() * frontImages.length)];
       card.backImage = randomFrontImage;
 
-      // 翻转卡片逻辑
-      const index = this.cards.findIndex(c => c === card);
-      if (index !== -1) {
-        this.cards.splice(index, 1, { ...this.cards[index], flipped: !this.cards[index].flipped });
-      }
+      // 切换翻转状态
+      card.flipped = !card.flipped;
     },
-
     copyCard(card) {
       if (navigator.clipboard) {
         // 使用剪贴板 API 复制图片链接
@@ -128,101 +122,102 @@ export default {
         console.error('剪贴板功能不可用');
       }
     }
-  
   }
 };
 </script>
 
 <style scoped>
 .app-container {
-  /* Other styles... */
   background: url('/images/star.gif') no-repeat center center fixed;
-  background-size: cover; /* 覆盖整个容器 */
-  width: 100%; /* 容器宽度占满整个视口 */
-  min-height: 100vh; /* 至少占据整个视口的高度 */
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
 }
 
-.el-header,
-.el-footer {
+.el-header, .el-footer {
   text-align: center;
 }
 
 .el-header h1 {
-  color: #800080; /* 深紫色 */
+  color: #800080;
 }
 
 .cards-container {
-  z-index: 2; /* 确保卡片在信纸之上 */
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 20px; /* 调整padding以确保卡片和信纸底部对齐 */
+  padding-bottom: 20px;
   position: relative;
 }
 
 .card-row {
   display: flex;
   justify-content: center;
-  margin: 10px 0; /* This creates a 20px gap between rows */
+  margin: 10px 0;
 }
 
 .card {
+  perspective: 1000px;
   width: 200px;
   height: 300px;
-  margin: 0 10px; /* This creates a 20px gap between cards */
-  perspective: 1000px;
+  margin: 0 10px;
   cursor: pointer;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
 }
 
-.card-face,
-.card-back {
+.card-inner {
+  position: relative;
   width: 100%;
   height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-face {
   position: absolute;
+  width: 100%;
+  height: 100%;
   backface-visibility: hidden;
   border-radius: 10px;
 }
 
+.card-front {
+  /* 正面样式 */
+}
+
 .card-back {
   transform: rotateY(180deg);
+  /* 背面样式 */
 }
 
-.card.flipped .card-face {
-  transform: rotateY(-180deg);
-}
-
-.card.flipped .card-back {
-  transform: rotateY(0deg);
+.is-flipped {
+  transform: rotateY(180deg);
 }
 
 .footer-content {
   text-align: center;
-  width: 100%; /* 确保footer占满整个宽度 */
+  width: 100%;
 }
 
 .copy-button {
   position: absolute;
   right: 1px;
   bottom: 1px;
-  border-radius: 50%; /* 圆形按钮 */
-  width: 20px; /* 设置按钮宽度 */
-  height: 20px; /* 设置按钮高度 */
-  padding: 0; /* 重置内边距 */
-  display: flex; /* 使用Flex布局 */
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
-  font-size: 14px; /* 调整图标大小，如果有必要 */
-  line-height: 1; /* 调整行高以确保内容居中 */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 1;
 }
-
 
 .footer-input {
-  /* 底部输入框特有的样式 */
-  background-color: #7b4b94; /* 紫色背景 */
-  color: white; /* 文字颜色为白色 */
+  background-color: #7b4b94;
+  color: white;
 }
 </style>
+
