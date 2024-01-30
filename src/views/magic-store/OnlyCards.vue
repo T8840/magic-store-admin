@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 .app-container {
-  background: url('/images/star.gif') repeat center center fixed;
+  background: url('/images/stars.GIF') repeat center center fixed;
   background-size: cover;
   width: 100%;
   min-height: 100vh;
