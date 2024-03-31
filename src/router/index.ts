@@ -20,7 +20,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     meta: {
       hidden: true  
     }
-  },
+  },  
   {
     path: '/cards',
     name: 'Cards',
@@ -29,6 +29,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       hidden: true  
     }
   },
+  /*
   {
     path: '/card',
     name: 'Card',
@@ -37,6 +38,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       hidden: true  
     }
   },
+  */
   {
     path: "/redirect",
     component: Layouts,
@@ -75,7 +77,7 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: "/",
     component: Layouts,
-    redirect: "/dashboard",
+    redirect: "/cards",
     children: [
       {
         path: "dashboard",

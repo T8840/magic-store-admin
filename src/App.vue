@@ -16,7 +16,7 @@ ElNotification({
   type: "success",
   message: h(
     "a",
-    { style: "color: teal", target: "_blank", href: "https://neal.place" },
+    { style: "color: teal", target: "_blank", href: "https://magicstore.cc" },
     "欢迎来到奇幻士多店~"
   ),
   duration: 0,

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from "vue"
-import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/member"
+import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/table"
 import { type GetTableData } from "@/api/table/types/table"
 import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "element-plus"
 import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
@@ -22,7 +22,7 @@ const formData = reactive({
   password: ""
 })
 const formRules: FormRules = reactive({
-  username: [{ required: true, trigger: "blur", message: "请输入邮箱" }],
+  username: [{ required: true, trigger: "blur", message: "请输入用户名" }],
   password: [{ required: true, trigger: "blur", message: "请输入密码" }]
 })
 const handleCreate = () => {
@@ -103,8 +103,7 @@ const getTableData = () => {
   })
     .then((res) => {
       paginationData.total = res.data.total
-      tableData.value = res.data
-      console.log("tableData:",tableData.value)
+      tableData.value = res.data.list
     })
     .catch(() => {
       tableData.value = []
@@ -160,10 +159,10 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
       <div class="table-wrapper">
         <el-table :data="tableData">
           <el-table-column type="selection" width="50" align="center" />
-          <el-table-column prop="email" label="用户名" align="center" />
+          <el-table-column prop="username" label="用户名" align="center" />
           <el-table-column prop="roles" label="角色" align="center">
             <template #default="scope">
-              <el-tag v-if="scope.row.is_admin === 'true'" effect="plain">admin</el-tag>
+              <el-tag v-if="scope.row.roles === 'admin'" effect="plain">admin</el-tag>
               <el-tag v-else type="warning" effect="plain">{{ scope.row.roles }}</el-tag>
             </template>
           </el-table-column>
