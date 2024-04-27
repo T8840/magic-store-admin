@@ -1,7 +1,7 @@
 <template>
   <el-container class="app-container-row">
      <!-- 图片A（右上角） -->
-     <img src="@/assets/layouts/butterfly_blue.png" alt="Image A" class="image-top-right">
+     <img src="@/assets/layouts/butterfly_yellow.png" alt="Image A" class="image-top-right">
 
 
     <el-header>
@@ -43,6 +43,7 @@
           <div class="card-face">
             <el-image :src="card.frontImage" fit="cover" />
           </div>
+          <!-- <div class="card-back" :class="{ 'angel-card-back': card.type === 'angel' }"> -->
           <div class="card-back">
             <el-image :src="card.backImage" fit="cover" />
             <el-button v-if="card.flipped" class="copy-button"  icon="el-icon-share" @click.stop="copyCard(card)"></el-button>
@@ -74,7 +75,7 @@
     </el-main>
 
     <el-footer class="footer-content">
-      <p>&copy; 2023 - <span>Neal </span> - Design</p>
+      <p>&copy; 2024 - <span>Neal && Jiajia</span> - Design</p>
     </el-footer>
 
     <!-- 图片B（左下角） -->
@@ -84,10 +85,10 @@
 </template>
 
 <script>
-import { energyBackURL, energyFrontURL} from './components/energyURL'; 
+import { energyBackURL, energyFrontURL} from './components/energyURL2'; 
 import { feelBadBackURL, feelBadFrontURL} from './components/feelBadURL'; 
 import { feelGoodBackURL, feelGoodFrontURL} from './components/feelGoodURL'; 
-import { giftBackURL, giftFrontURL} from './components/giftURL'; 
+import { giftBackURL, giftFrontURL} from './components/giftURL2'; 
 import { relationBackURL, relationFrontURL} from './components/relationURL'; 
 import { viewBadBackURL, viewBadFrontURL} from './components/viewBadURL'; 
 import { viewGoodBackURL, viewGoodFrontURL} from './components/viewGoodURL'; 
@@ -271,6 +272,7 @@ export default {
   height: auto; /* 高度自适应 */
   object-fit: cover; /* 保持图片比例 */
   margin-right: 20px; /* 与卡片行的间距 */
+  margin-left: 40px; /* 与卡片行的间距 */
   max-height: 500px; /* 最大高度限制，根据需要调整 */
 }
 
