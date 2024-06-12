@@ -94,7 +94,7 @@ import { viewBadBackURL, viewBadFrontURL} from './components/viewBadURL';
 import { viewGoodBackURL, viewGoodFrontURL} from './components/viewGoodURL'; 
 import { fightBackURL , fightFrontURL} from './components/fightURL'; 
 import { ideaBackURL , ideaFrontURL} from './components/ideaURL'; 
-import { angelBackURL, angelFrontURL} from './components/angelURL'; 
+import { angelBackURL, angelFrontURL} from './components/angelURL2'; 
 
 
 export default {
