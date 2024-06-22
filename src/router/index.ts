@@ -5,6 +5,7 @@ import LandingPage from '@/views/magic-store/LandingPage.vue'
 import OnlyCards from '@/views/magic-store/OnlyCards.vue'
 import OnlyCardsTwoRow from '@/views/magic-store/OnlyCardsTwoRow.vue'
 import NewCards from '@/views/magic-store/NewCards.vue'
+import OnlyCardsTimeFly from "@/views/magic-store/OnlyCardsTimeFly.vue"
 
 
 const Layouts = () => import("@/layouts/index.vue")
@@ -34,6 +35,14 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: '/newcards',
     name: 'NewCards',
     component: NewCards,
+    meta: {
+      hidden: true  
+    }
+  },
+  {
+    path: '/timefly',
+    name: 'TimeFly',
+    component: OnlyCardsTimeFly,
     meta: {
       hidden: true  
     }
