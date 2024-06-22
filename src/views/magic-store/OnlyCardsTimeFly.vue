@@ -216,7 +216,7 @@ export default {
 <style scoped>
 .app-container-row {
   /* Other styles... */
-  background: url('@/assets/layouts/star.gif') no-repeat center center fixed; 
+  background: url('@/assets/layouts/stargif.gif') no-repeat center center fixed; 
   background-size: cover; /* 覆盖整个容器 */
   width: 100%; /* 容器宽度占满整个视口 */
   min-height: 100vh; /* 至少占据整个视口的高度 */
