@@ -12,7 +12,7 @@
       <div class="card-row">
         <div
           class="card"
-          :class="{ 'flipped': card.flipped }"
+          :class="{ 'flipped': card.flipped, 'move-down': shouldMoveDown(card.type) }"
           v-for="(card, index) in topRowCards"
           :key="`top-${index}`"
           @click="flipCard(card)"
@@ -31,7 +31,7 @@
       <div class="card-row">
         <div
           class="card"
-          :class="{ 'flipped': card.flipped }"
+          :class="{ 'flipped': card.flipped, 'move-down': shouldMoveDown(card.type) }"
           v-for="(card, index) in bottomRowCards"
           :key="`bottom-${index}`"
           @click="flipCard(card)"
@@ -88,6 +88,7 @@ import { specialBackURL, specialFrontURL} from './components-timefly/specialMovi
 import { heartBackURL , heartFrontURL} from './components-timefly/heartGlass'; 
 import { shareBackURL , shareFrontURL} from './components-timefly/shareMicro'; 
 import { feelBackURL , feelFrontURL} from './components-timefly/feel'; 
+import { energyBackURL , energyFrontURL} from './components-timefly/energy'; 
 
 
 export default {
@@ -156,6 +157,7 @@ export default {
           break;
         case 'share':
           frontImages = shareFrontURL;
+          break;
         case 'feel':
           frontImages = feelFrontURL;
           break;
@@ -191,6 +193,9 @@ export default {
       this.specialCardFlipped = true;
       this.selectedCardImage = randomImageUrl;
       this.dialogVisible = true;
+    },
+    shouldMoveDown(type) {
+      return ['idea', 'emotion', 'ability', 'universe', 'fight','special', 'heart', 'share'].includes(type);
     },
     copyCard(card) {
       if (navigator.clipboard) {
@@ -288,6 +293,10 @@ export default {
 
 .card.flipped .card-back {
   transform: rotateY(0deg);
+}
+
+.card.move-down {
+  transform: translateY(40px);
 }
 
 .special-card {
